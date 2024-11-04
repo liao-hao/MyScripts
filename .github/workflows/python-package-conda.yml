@@ -1,0 +1,28 @@
+name: Python Package using Conda
+
+on: [push]
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        pip install -r ./MysqlExport/requirements.txt
+        
+    - name: Package script
+      run: |
+        pyinstaller --onefile --noconsole ./MysqlExport/ExportGUI.py
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: packaged-script
+        path: dist/
