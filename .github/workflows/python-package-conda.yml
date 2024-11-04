@@ -7,9 +7,9 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: '3.11'
 
@@ -19,10 +19,10 @@ jobs:
         
     - name: Package script
       run: |
-        pyinstaller --onefile --noconsole ./MysqlExport/ExportGUI.py
+        pyinstaller --onefile --noconsole --distpath ./MysqlExport ./MysqlExport/ExportGUI.py
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: packaged-script
-        path: dist/
+        path: MysqlExport/
